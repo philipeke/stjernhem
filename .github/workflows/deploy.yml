@@ -1,0 +1,54 @@
+name: Bygg och publicera till GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Tillåt att GITHUB_TOKEN publicerar till Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# En publicering i taget. Pågående körningar avbryts inte — de får slutföras.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installera beroenden
+        run: npm ci
+
+      - name: Bygg
+        run: npm run build
+        env:
+          VITE_FORM_ENDPOINT: ${{ vars.VITE_FORM_ENDPOINT }}
+
+      - name: Kontrollera att CNAME följde med
+        run: test -f dist/CNAME && cat dist/CNAME
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

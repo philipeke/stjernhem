@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 140 140" width="140" height="140">
+  <defs>
+  <linearGradient id="silver" x1="6%" y1="0%" x2="94%" y2="100%">
+    <stop offset="0%" stop-color="#ffffff"/>
+    <stop offset="26%" stop-color="#cfdae7"/>
+    <stop offset="52%" stop-color="#8fa2b8"/>
+    <stop offset="74%" stop-color="#e8eff7"/>
+    <stop offset="100%" stop-color="#a5b5c8"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#ecdcb8"/>
+    <stop offset="55%" stop-color="#c9a96a"/>
+    <stop offset="100%" stop-color="#ad8c4e"/>
+  </linearGradient></defs>
+  <rect x="-10" y="-10" width="140" height="140" rx="30.8" fill="#0c1e38"/>
+  <path d="M60.00 4.00 L64.78 48.45 L87.58 32.42 L71.55 55.22 L116.00 60.00 L71.55 64.78 L87.58 87.58 L64.78 71.55 L60.00 116.00 L55.22 71.55 L32.42 87.58 L48.45 64.78 L4.00 60.00 L48.45 55.22 L32.42 32.42 L55.22 48.45 Z" fill="none" stroke="url(#silver)" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M52.4 61.6 L60 53.8 L67.6 61.6" fill="none" stroke="url(#gold)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M55.4 67.4 H64.6" fill="none" stroke="url(#gold)" stroke-width="3.6" stroke-linecap="round"/>
+</svg>

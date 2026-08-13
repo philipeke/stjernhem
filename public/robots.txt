@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://stjernhem.se/sitemap.xml
