@@ -22,14 +22,16 @@ for (const reduced of [false, true]) {
   await page.goto(URL, { waitUntil: 'networkidle0', timeout: 60000 })
   await page.evaluate(() => document.fonts.ready)
 
+  // Långsam genomgång: intersection-observers behöver bildrutor på sig att
+  // utlösa, och intoningarna tar knappt en sekund var.
   await page.evaluate(async () => {
-    const step = window.innerHeight * 0.6
+    const step = window.innerHeight * 0.5
     for (let y = 0; y < document.body.scrollHeight; y += step) {
       window.scrollTo(0, y)
-      await new Promise((r) => setTimeout(r, 180))
+      await new Promise((r) => setTimeout(r, 420))
     }
   })
-  await new Promise((r) => setTimeout(r, 2500))
+  await new Promise((r) => setTimeout(r, 4000))
 
   const report = await page.evaluate(() => {
     const invisible = []
