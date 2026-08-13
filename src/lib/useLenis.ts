@@ -24,10 +24,12 @@ export function useLenis(enabled: boolean) {
     if (!enabled) return
 
     const lenis = new Lenis({
-      duration: 1.05,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1.6,
+      // Lerp i stället för duration: sidan följer hjulet direkt och glider
+      // bara ut sista biten. En längre duration gav ett flytande efter-
+      // släp som lätt uppfattas som att sidan hakar upp sig.
+      lerp: 0.14,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.8,
       // Touch-scroll får bete sig som användaren förväntar sig på mobil.
       syncTouch: false,
     })

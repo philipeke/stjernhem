@@ -15,7 +15,7 @@ export function Why() {
       />
 
       <div className="shell grid gap-14 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-[calc(var(--notice-h)+var(--header-h)+3rem)]">
             <Reveal direction="none">
               <span className="inline-flex items-center gap-3 text-silver-400">
@@ -24,7 +24,9 @@ export function Why() {
               </span>
             </Reveal>
             <Reveal delay={0.06}>
-              <h2 className="mt-5 display-2 max-w-[13ch] font-normal text-silver-50">
+              {/* Egen skala i stället för display-2: rubriken står i en smal
+                  sticky-kolumn och "Specialistkompetens" går inte att bryta. */}
+              <h2 className="mt-5 max-w-[15ch] text-[clamp(1.9rem,3.2vw,2.75rem)] font-normal text-silver-50">
                 {WHY.heading}
               </h2>
             </Reveal>
@@ -38,7 +40,7 @@ export function Why() {
 
         <Stagger
           as="ul"
-          className="flex flex-col divide-y divide-silver-400/12 border-t border-silver-400/12 lg:col-span-8"
+          className="flex flex-col divide-y divide-silver-400/12 border-t border-silver-400/12 lg:col-span-7"
         >
           {WHY.items.map((item, i) => (
             <Stagger.Item as="li" key={item.title} className="group py-8 sm:py-9">

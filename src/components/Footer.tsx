@@ -85,6 +85,17 @@ export function Footer() {
             </p>
           )}
           <a
+            href="https://oakdev.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 py-1.5 font-brand text-[0.62rem] tracking-[0.14em] text-silver-600 uppercase transition-colors duration-300 hover:text-silver-300"
+          >
+            Built by
+            <span className="text-silver-500 transition-colors duration-300 group-hover:text-white">
+              OakDev
+            </span>
+          </a>
+          <a
             href="#top"
             className="group inline-flex items-center gap-2.5 py-1.5 font-brand text-[0.62rem] tracking-[0.14em] text-silver-500 uppercase transition-colors duration-300 hover:text-white"
           >

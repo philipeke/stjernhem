@@ -41,8 +41,8 @@ export function Method() {
 function BackdropGlow() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      <div className="absolute top-[8%] -left-[18%] size-[42rem] max-w-[90vw] rounded-full bg-[radial-gradient(circle,rgba(26,58,99,0.34),transparent_66%)] blur-3xl" />
-      <div className="absolute right-[-14%] bottom-[16%] size-[38rem] max-w-[86vw] rounded-full bg-[radial-gradient(circle,rgba(79,107,90,0.22),transparent_66%)] blur-3xl" />
+      <div className="absolute top-[8%] -left-[18%] size-[42rem] max-w-[90vw] rounded-full bg-[radial-gradient(circle,rgba(26,58,99,0.34),transparent_66%)] blur-2xl" />
+      <div className="absolute right-[-14%] bottom-[16%] size-[38rem] max-w-[86vw] rounded-full bg-[radial-gradient(circle,rgba(79,107,90,0.22),transparent_66%)] blur-2xl" />
     </div>
   )
 }

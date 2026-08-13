@@ -17,8 +17,9 @@ export function Hero() {
   const motionOk = useMotionEnabled()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
 
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1.06, 1.18])
+  // Bara förflyttning, ingen skalning: att skala fotografiet under scroll
+  // tvingade fram en omritning av en 2560 px bred bild varje bildruta.
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '16%'])
   const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-14%'])
   const contentOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0])
 
@@ -31,8 +32,8 @@ export function Hero() {
       {/* Lager 1 — fotografiet, avdämpat till nästan monokromt. */}
       <motion.div
         aria-hidden
-        style={motionOk ? { y: bgY, scale: bgScale } : undefined}
-        className="absolute inset-0 -z-30"
+        style={motionOk ? { y: bgY, willChange: 'transform' } : undefined}
+        className="absolute inset-0 -z-30 scale-[1.18] origin-top"
       >
         <Img
           name="hero-forest"
@@ -65,8 +66,8 @@ export function Hero() {
 
       {/* Lager 3 — långsamt drivande ljus. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
-        <div className="absolute -top-[26%] left-[6%] size-[46rem] max-w-[92vw] animate-drift rounded-full bg-[radial-gradient(circle,rgba(39,80,127,0.34),transparent_66%)] blur-3xl motion-reduce:animate-none" />
-        <div className="absolute -right-[12%] bottom-[-18%] size-[40rem] max-w-[88vw] animate-drift-slow rounded-full bg-[radial-gradient(circle,rgba(107,139,118,0.24),transparent_66%)] blur-3xl motion-reduce:animate-none" />
+        <div className="aurora absolute -top-[26%] left-[6%] size-[46rem] max-w-[92vw] animate-drift rounded-full bg-[radial-gradient(circle,rgba(39,80,127,0.34),transparent_66%)] blur-2xl motion-reduce:animate-none" />
+        <div className="aurora absolute -right-[12%] bottom-[-18%] size-[40rem] max-w-[88vw] animate-drift-slow rounded-full bg-[radial-gradient(circle,rgba(107,139,118,0.24),transparent_66%)] blur-2xl motion-reduce:animate-none" />
       </div>
 
       {/* Lager 4 — stjärnhimlen. */}

@@ -69,16 +69,18 @@
   --breakpoint-xs: 26rem;
 }
 
+/* Enbart förflyttning, ingen skalning: en skalad oskärpa måste ritas om
+   varje bildruta, medan en ren förflyttning kan skötas av kompositorn. */
 @keyframes drift {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
   33% {
-    transform: translate3d(3%, -4%, 0) scale(1.08);
+    transform: translate3d(4%, -5%, 0);
   }
   66% {
-    transform: translate3d(-4%, 3%, 0) scale(1.04);
+    transform: translate3d(-5%, 4%, 0);
   }
 }
 
@@ -180,6 +182,16 @@
     letter-spacing: -0.018em;
     line-height: 1.06;
     text-wrap: balance;
+    /* Svenska sammansättningar blir långa: "specialistkompetensen" ryms inte
+       i en smal kolumn vid displaystorlek. Avstava dem hellre än att låta
+       dem lägga sig över innehållet bredvid — och bryt som sista utväg. */
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
+  /* Hjälterubriken är kort och satt för hand — den ska aldrig avstavas. */
+  h1 {
+    hyphens: manual;
   }
 
   p {
@@ -292,6 +304,14 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /* Stora, suddiga ljusfält. Ligger i eget kompositorlager så att drift-
+     animationen inte tvingar fram omritning av oskärpan. */
+  .aurora {
+    will-change: transform;
+    transform: translateZ(0);
+    contain: strict;
   }
 
   .grain::after {

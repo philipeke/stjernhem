@@ -6,9 +6,17 @@ import { NAV, SITE } from '../data/content'
 import { setScrollLocked } from '../lib/useLenis'
 import { cn } from '../lib/cn'
 
+/** Normaliserar sökvägen så att /metod och /metod/ jämförs lika. */
+function normalise(path: string) {
+  return path.endsWith('/') ? path : `${path}/`
+}
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [path, setPath] = useState('/')
+
+  useEffect(() => setPath(normalise(window.location.pathname)), [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -35,16 +43,19 @@ export function Header() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
         className={cn(
           'fixed inset-x-0 top-[var(--notice-h)] z-50 h-[var(--header-h)] transition-[background-color,backdrop-filter,border-color] duration-500',
+          // Måttlig backdrop-blur: filtret samplar om bakgrunden varje
+          // bildruta under scroll, och 24 px kostade märkbart mer än 12 px
+          // utan att se annorlunda ut bakom en nästan täckande yta.
           scrolled || menuOpen
-            ? 'border-b border-silver-400/12 bg-ink-900/80 backdrop-blur-xl'
+            ? 'border-b border-silver-400/12 bg-ink-900/88 backdrop-blur-md'
             : 'border-b border-transparent bg-transparent'
         )}
       >
         <div className="shell flex h-full items-center justify-between gap-6">
           <a
-            href="#top"
+            href="/"
             className="flex min-h-11 shrink-0 items-center rounded-sm transition-opacity duration-300 hover:opacity-85"
-            aria-label={`${SITE.legalName} — till toppen`}
+            aria-label={`${SITE.legalName} — till startsidan`}
           >
             <LogoLockup size="sm" className="hidden sm:flex" />
             <StarMark className="size-10 sm:hidden" />
@@ -52,28 +63,40 @@ export function Header() {
 
           <nav aria-label="Huvudmeny" className="hidden lg:block">
             <ul className="flex items-center gap-1">
-              {NAV.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className="group relative block px-3.5 py-2 font-brand text-[0.72rem] font-medium tracking-[0.14em] text-silver-300 uppercase transition-colors duration-300 hover:text-white"
-                  >
-                    {item.label}
-                    <span
-                      aria-hidden
-                      className="absolute inset-x-3.5 bottom-1 h-px origin-left scale-x-0 bg-gold-300/80 transition-transform duration-400 ease-out-expo group-hover:scale-x-100"
-                    />
-                  </a>
-                </li>
-              ))}
+              {NAV.map((item) => {
+                const active = path === item.href
+                return (
+                  <li key={item.href}>
+                    <a
+                      href={item.href}
+                      aria-current={active ? 'page' : undefined}
+                      className={cn(
+                        'group relative block px-3.5 py-2 font-brand text-[0.72rem] font-medium tracking-[0.14em] uppercase transition-colors duration-300 hover:text-white',
+                        active ? 'text-white' : 'text-silver-300'
+                      )}
+                    >
+                      {item.label}
+                      <span
+                        aria-hidden
+                        className={cn(
+                          'absolute inset-x-3.5 bottom-1 h-px origin-left bg-gold-300/80 transition-transform duration-400 ease-out-expo group-hover:scale-x-100',
+                          active ? 'scale-x-100' : 'scale-x-0'
+                        )}
+                      />
+                    </a>
+                  </li>
+                )
+              })}
             </ul>
           </nav>
 
           <div className="flex items-center gap-3">
-            <Button href="#kontakt" size="md" className="hidden md:inline-flex">
-              Boka möte
-              <ArrowRight />
-            </Button>
+            <div className="hidden md:block">
+              <Button href="/kontakt/" size="md">
+                Boka möte
+                <ArrowRight />
+              </Button>
+            </div>
 
             <button
               type="button"
@@ -104,7 +127,9 @@ export function Header() {
         <ScrollProgress />
       </motion.header>
 
-      <AnimatePresence>{menuOpen && <MobileMenu onClose={() => setMenuOpen(false)} />}</AnimatePresence>
+      <AnimatePresence>
+        {menuOpen && <MobileMenu path={path} onClose={() => setMenuOpen(false)} />}
+      </AnimatePresence>
     </>
   )
 }
@@ -121,7 +146,7 @@ function ScrollProgress() {
   )
 }
 
-function MobileMenu({ onClose }: { onClose: () => void }) {
+function MobileMenu({ path, onClose }: { path: string; onClose: () => void }) {
   return (
     <motion.div
       id="mobilmeny"
@@ -145,11 +170,15 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                 <a
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-baseline justify-between gap-4 py-5 font-display text-3xl text-silver-100 transition-colors duration-300 hover:text-white"
+                  aria-current={path === item.href ? 'page' : undefined}
+                  className={cn(
+                    'flex items-baseline justify-between gap-4 py-5 font-display text-3xl transition-colors duration-300 hover:text-white',
+                    path === item.href ? 'text-white' : 'text-silver-100'
+                  )}
                 >
                   {item.label}
                   <span className="font-brand text-[0.62rem] tracking-[0.2em] text-silver-500">
-                    {String(i + 1).padStart(2, '0')}
+                    {path === item.href ? '●' : String(i + 1).padStart(2, '0')}
                   </span>
                 </a>
               </motion.li>
@@ -163,7 +192,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           transition={{ duration: 0.55, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="mt-10 flex flex-col gap-5"
         >
-          <Button href="#kontakt" size="lg" magnetic={false} className="w-full">
+          <Button href="/kontakt/" size="lg" magnetic={false} className="w-full">
             Boka ett möte
             <ArrowRight />
           </Button>

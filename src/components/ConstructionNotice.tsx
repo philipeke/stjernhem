@@ -12,7 +12,7 @@ export function ConstructionBar() {
       initial={{ y: '-100%' }}
       animate={{ y: 0 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-      className="fixed inset-x-0 top-0 z-60 h-[var(--notice-h)] border-b border-gold-400/25 bg-[#0d1526]/95 backdrop-blur-xl"
+      className="fixed inset-x-0 top-0 z-60 h-[var(--notice-h)] border-b border-gold-400/25 bg-[#0d1526]"
     >
       <div
         aria-hidden

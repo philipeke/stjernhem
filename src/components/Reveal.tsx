@@ -18,7 +18,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
-  duration = 0.8,
+  duration = 0.55,
   direction = 'up',
   amount = 0.3,
   as = 'div',
@@ -48,12 +48,12 @@ export function Reveal({
 /** Barn animeras in i tur och ordning. Använd med <Stagger.Item>. */
 const containerVariants: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.06 } },
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.04 } },
 }
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE } },
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
 }
 
 export function Stagger({

@@ -9,8 +9,9 @@ export const SITE = {
   tagline: 'Rehabilitering & Hälsa',
   domain: 'stjernhem.se',
   url: 'https://stjernhem.se',
-  /** OBS: bekräfta e-postadressen innan lansering. */
-  email: 'info@stjernhem.se',
+  /** Adressen är beslutad men brevlådan är ännu inte aktiverad. */
+  email: 'anneli@stjernhem.se',
+  emailActive: false,
   phone: '073-825 79 35',
   phoneHref: '+46738257935',
   contactPerson: 'Anneli Magnusson',
@@ -20,14 +21,16 @@ export const SITE = {
   underConstruction: true,
 } as const
 
+/** Sidorna på webbplatsen. `href` används rakt av i menyn och i sitemapen. */
 export const NAV = [
-  { label: 'Utmaningen', href: '#utmaningen' },
-  { label: 'Metod', href: '#metod' },
-  { label: 'Tjänster', href: '#tjanster' },
-  { label: 'Rapporten', href: '#rapporten' },
-  { label: 'Om oss', href: '#om-oss' },
-  { label: 'Frågor', href: '#fragor' },
+  { label: 'Metod', href: '/metod/' },
+  { label: 'Tjänster', href: '/tjanster/' },
+  { label: 'Om oss', href: '/om-oss/' },
+  { label: 'Frågor', href: '/fragor/' },
+  { label: 'Kontakt', href: '/kontakt/' },
 ] as const
+
+export const PAGES = [{ label: 'Start', href: '/' }, ...NAV] as const
 
 export const HERO = {
   eyebrow: 'Arbetslivsinriktad rehabilitering',
@@ -347,7 +350,7 @@ export const FAQ = [
 ] as const
 
 export const CONTACT = {
-  eyebrow: 'Kontakt',
-  heading: 'Vill ni veta hur vi kan hjälpa er kommun att möta de nya kraven?',
-  body: 'Välkommen att kontakta oss för att boka ett förutsättningslöst digitalt möte — eller ett besök på plats hos er, där vi visar hur våra arbetsstationer är uppbyggda.',
+  eyebrow: 'Så når ni oss',
+  heading: 'Ni når arbetsterapeuten direkt',
+  body: 'Ingen växel och ingen säljorganisation. Ring, mejla eller skicka formuläret så återkommer vi med förslag på tid — oftast samma dag.',
 } as const

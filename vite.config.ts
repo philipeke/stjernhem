@@ -3,6 +3,20 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+// @ts-expect-error — ren JS-konfiguration som delas med scripts/make-pages.mjs
+import { PAGES, htmlFor } from './pages.config.mjs'
+
+/**
+ * Varje sida är ett eget HTML-dokument. Det ger riktiga adresser
+ * (/metod/ i stället för /#metod), egen titel och beskrivning per sida,
+ * och en 200-svarande URL som sökmotorer kan indexera var för sig.
+ */
+const input = Object.fromEntries(
+  (PAGES as { dir: string }[]).map((page) => [
+    page.dir || 'home',
+    fileURLToPath(new URL(htmlFor(page), import.meta.url)),
+  ])
+)
 
 /**
  * Porträttet av Anneli finns ännu inte. I stället för att låta webbläsaren
@@ -30,6 +44,7 @@ export default defineConfig({
     cssTarget: 'chrome111',
     assetsInlineLimit: 2048,
     rollupOptions: {
+      input,
       output: {
         // Animationsbiblioteket är stort och ändras sällan — egen chunk
         // ger bättre cachning mellan deployer.

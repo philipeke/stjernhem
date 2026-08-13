@@ -6,13 +6,15 @@
   "description": "Webbplats för Stjernhem Rehabilitering & Hälsa AB",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run pages && tsc -b && vite build",
     "preview": "vite preview --port 4173",
     "typecheck": "tsc -b --noEmit false --pretty",
     "images": "node scripts/fetch-images.mjs",
     "brand": "node scripts/make-brand-assets.mjs",
-    "qa": "node scripts/check-a11y.mjs && node scripts/check-mobile.mjs && node scripts/shoot.mjs",
-    "qa:shots": "node scripts/shoot-sections.mjs"
+    "qa": "node scripts/check-site.mjs",
+    "qa:shots": "node scripts/shoot-sections.mjs",
+    "pages": "node scripts/make-pages.mjs",
+    "qa:perf": "node scripts/measure-perf.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",
