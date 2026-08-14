@@ -182,16 +182,13 @@
     letter-spacing: -0.018em;
     line-height: 1.06;
     text-wrap: balance;
-    /* Svenska sammansättningar blir långa: "specialistkompetensen" ryms inte
-       i en smal kolumn vid displaystorlek. Avstava dem hellre än att låta
-       dem lägga sig över innehållet bredvid — och bryt som sista utväg. */
-    hyphens: auto;
-    overflow-wrap: break-word;
-  }
-
-  /* Hjälterubriken är kort och satt för hand — den ska aldrig avstavas. */
-  h1 {
+    /* Ingen automatisk avstavning i rubriker. Med text-wrap: balance börjar
+       webbläsaren annars avstava även korta ord för att jämna ut raderna —
+       "bru-kar" mitt i en rubrik. Rubriker sätts i stället i en storlek som
+       ryms i sin kolumn; overflow-wrap finns kvar som sista skyddsnät så att
+       ett långt sammansatt ord aldrig kan lägga sig över innehållet bredvid. */
     hyphens: manual;
+    overflow-wrap: break-word;
   }
 
   p {
