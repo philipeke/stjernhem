@@ -1,82 +1,106 @@
-import type { ReactNode } from 'react'
-import { motion, type Variants } from 'motion/react'
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useRef,
+  type CSSProperties,
+  type ReactNode,
+} from 'react'
+import { observeReveal } from '../lib/reveal'
 import { cn } from '../lib/cn'
-
-const EASE = [0.16, 1, 0.3, 1] as const
 
 type Direction = 'up' | 'down' | 'left' | 'right' | 'none'
 
-const offset: Record<Direction, { x?: number; y?: number }> = {
-  up: { y: 26 },
-  down: { y: -26 },
-  left: { x: 30 },
-  right: { x: -30 },
+/** Startförskjutningen per riktning, som CSS-variabler. */
+const offset: Record<Direction, CSSProperties> = {
+  up: { '--rv-y': '24px' } as CSSProperties,
+  down: { '--rv-y': '-24px' } as CSSProperties,
+  left: { '--rv-x': '28px' } as CSSProperties,
+  right: { '--rv-x': '-28px' } as CSSProperties,
   none: {},
 }
 
+type Tag = 'div' | 'span' | 'li' | 'section' | 'header' | 'p' | 'article' | 'ul' | 'ol'
+
+/**
+ * Tonar in innehållet när det kommer in i vy. Övergången ligger i CSS
+ * (se `[data-reveal]` i index.css) och körs av kompositorn — inga
+ * bildruteberäkningar på huvudtråden.
+ */
 export function Reveal({
   children,
   className,
   delay = 0,
   duration = 0.55,
   direction = 'up',
-  amount = 0.3,
-  as = 'div',
+  as: Tag = 'div',
 }: {
   children: ReactNode
   className?: string
   delay?: number
+  /** Sekunder, som tidigare. */
   duration?: number
   direction?: Direction
+  /** Behålls för bakåtkompatibilitet men styr numera inget. */
   amount?: number
-  as?: 'div' | 'span' | 'li' | 'section' | 'header' | 'p'
+  as?: Tag
 }) {
-  const Tag = motion[as]
+  const ref = useRef<HTMLElement>(null)
+  useEffect(() => observeReveal(ref.current), [])
+
   return (
     <Tag
+      ref={ref as never}
+      data-reveal=""
       className={className}
-      initial={{ opacity: 0, ...offset[direction] }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, amount }}
-      transition={{ duration, delay, ease: EASE }}
+      style={
+        {
+          ...offset[direction],
+          '--rv-delay': `${Math.round(delay * 1000)}ms`,
+          '--rv-duration': `${Math.round(duration * 1000)}ms`,
+        } as CSSProperties
+      }
     >
       {children}
     </Tag>
   )
 }
 
-/** Barn animeras in i tur och ordning. Använd med <Stagger.Item>. */
-const containerVariants: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.06, delayChildren: 0.04 } },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
-}
-
+/**
+ * Tonar in sina barn i tur och ordning. Fördröjningen räknas ut här och
+ * skickas ned som en CSS-variabel, så att hela gruppen sköts av en enda
+ * observation.
+ */
 export function Stagger({
   children,
   className,
-  amount = 0.18,
-  as = 'div',
+  as: Tag = 'div',
+  step = 60,
 }: {
   children: ReactNode
   className?: string
   amount?: number
   as?: 'div' | 'ul' | 'ol'
+  /** Millisekunder mellan barnen. */
+  step?: number
 }) {
-  const Tag = motion[as]
+  const ref = useRef<HTMLElement>(null)
+  useEffect(() => observeReveal(ref.current), [])
+
+  let index = 0
+  const items = Children.map(children, (child) => {
+    if (!isValidElement<{ style?: CSSProperties }>(child)) return child
+    const delay = 40 + index * step
+    index += 1
+    return cloneElement(child, {
+      style: { ...(child.props.style ?? {}), '--rv-delay': `${delay}ms` } as CSSProperties,
+    })
+  })
+
   return (
-    <Tag
-      className={className}
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount }}
-    >
-      {children}
+    <Tag ref={ref as never} data-reveal-group="" className={className}>
+      {items}
     </Tag>
   )
 }
@@ -84,15 +108,16 @@ export function Stagger({
 Stagger.Item = function StaggerItem({
   children,
   className,
-  as = 'div',
+  style,
+  as: Tag = 'div',
 }: {
   children: ReactNode
   className?: string
+  style?: CSSProperties
   as?: 'div' | 'li' | 'article'
 }) {
-  const Tag = motion[as]
   return (
-    <Tag className={cn(className)} variants={itemVariants}>
+    <Tag data-reveal-child="" className={cn(className)} style={style}>
       {children}
     </Tag>
   )

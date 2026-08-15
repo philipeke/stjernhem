@@ -1,4 +1,6 @@
+import { useEffect, useRef } from 'react'
 import { StarMark } from './Logo'
+import { observePause } from '../lib/reveal'
 import { cn } from '../lib/cn'
 
 /**
@@ -6,6 +8,9 @@ import { cn } from '../lib/cn'
  * kopian döljs för skärmläsare.
  */
 export function Marquee({ items, className }: { items: readonly string[]; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => observePause(ref.current), [])
+
   const row = (hidden: boolean) => (
     <ul
       className="flex shrink-0 items-center gap-10 pr-10 sm:gap-14 sm:pr-14"
@@ -23,7 +28,7 @@ export function Marquee({ items, className }: { items: readonly string[]; classN
   )
 
   return (
-    <div className={cn('fade-edges-x overflow-hidden', className)}>
+    <div ref={ref} className={cn('fade-edges-x overflow-hidden', className)}>
       <div className="flex w-max animate-marquee motion-reduce:animate-none">
         {row(false)}
         {row(true)}

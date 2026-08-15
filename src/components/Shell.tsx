@@ -15,7 +15,7 @@ import { useMotionEnabled } from '../lib/useMediaQuery'
  */
 export function Shell({ children }: { children: ReactNode }) {
   const motionOk = useMotionEnabled()
-  useLenis(motionOk)
+  useLenis(motionOk && SITE.smoothScroll)
 
   useEffect(() => {
     document.documentElement.dataset.notice = SITE.underConstruction ? 'on' : 'off'

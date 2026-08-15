@@ -43,11 +43,11 @@ export function Header() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
         className={cn(
           'fixed inset-x-0 top-[var(--notice-h)] z-50 h-[var(--header-h)] transition-[background-color,backdrop-filter,border-color] duration-500',
-          // Måttlig backdrop-blur: filtret samplar om bakgrunden varje
-          // bildruta under scroll, och 24 px kostade märkbart mer än 12 px
-          // utan att se annorlunda ut bakom en nästan täckande yta.
+          // Ingen backdrop-filter: filtret måste sampla om bakgrunden varje
+          // bildruta under scroll och stod för en mätbar del av hacket. Med
+          // en nästan täckande bakgrund syns skillnaden inte.
           scrolled || menuOpen
-            ? 'border-b border-silver-400/12 bg-ink-900/88 backdrop-blur-md'
+            ? 'border-b border-silver-400/12 bg-ink-900/95'
             : 'border-b border-transparent bg-transparent'
         )}
       >
@@ -154,7 +154,7 @@ function MobileMenu({ path, onClose }: { path: string; onClose: () => void }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="fixed inset-0 top-[calc(var(--notice-h)+var(--header-h))] z-40 bg-ink-900/97 backdrop-blur-2xl lg:hidden"
+      className="fixed inset-0 top-[calc(var(--notice-h)+var(--header-h))] z-40 bg-ink-900 lg:hidden"
     >
       <div className="shell flex h-full flex-col justify-between overflow-y-auto py-10">
         <nav aria-label="Meny">

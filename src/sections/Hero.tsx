@@ -1,5 +1,6 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
+import { observePause } from '../lib/reveal'
 import { Starfield } from '../components/Starfield'
 import { StarMark } from '../components/Logo'
 import { SplitText } from '../components/SplitText'
@@ -14,7 +15,9 @@ const EASE = [0.16, 1, 0.3, 1] as const
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null)
+  const auroraRef = useRef<HTMLDivElement>(null)
   const motionOk = useMotionEnabled()
+  useEffect(() => observePause(auroraRef.current), [])
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
 
   // Bara förflyttning, ingen skalning: att skala fotografiet under scroll
@@ -64,8 +67,8 @@ export function Hero() {
         }}
       />
 
-      {/* Lager 3 — långsamt drivande ljus. */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
+      {/* Lager 3 — långsamt drivande ljus. Pausas när hero rullat ur bild. */}
+      <div ref={auroraRef} aria-hidden className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
         <div className="aurora absolute -top-[26%] left-[6%] size-[46rem] max-w-[92vw] animate-drift rounded-full bg-[radial-gradient(circle,rgba(39,80,127,0.34),transparent_66%)] blur-2xl motion-reduce:animate-none" />
         <div className="aurora absolute -right-[12%] bottom-[-18%] size-[40rem] max-w-[88vw] animate-drift-slow rounded-full bg-[radial-gradient(circle,rgba(107,139,118,0.24),transparent_66%)] blur-2xl motion-reduce:animate-none" />
       </div>

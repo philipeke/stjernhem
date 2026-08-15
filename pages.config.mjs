@@ -33,7 +33,7 @@ export const PAGES = [
     ogTitle: 'Vi flyttar testmiljön till era lokaler',
     ogDescription:
       'Arbetsstationer inom administration, IT, montering och hantverk. Observation i aktivitet, dagligen, över tre veckor — sedan en kliniskt grundad slutrapport.',
-    preload: 'forest-layers-1600.avif',
+    preload: 'forest-layers-1440.avif',
     priority: '0.9',
     breadcrumb: 'Metod',
   },
@@ -59,7 +59,7 @@ export const PAGES = [
     ogTitle: 'Femton år av att se det som inte syns',
     ogDescription:
       'Verksamheten leds av en legitimerad arbetsterapeut med bred erfarenhet från stat, kommun och neurologisk rehabilitering.',
-    preload: 'lake-dawn-1600.avif',
+    preload: 'lake-dawn-1440.avif',
     priority: '0.8',
     breadcrumb: 'Om oss',
   },
@@ -87,7 +87,7 @@ export const PAGES = [
     ogTitle: 'Boka ett förutsättningslöst möte',
     ogDescription:
       'Digitalt eller på plats hos er, där vi visar hur arbetsstationerna är uppbyggda.',
-    preload: 'coast-1600.avif',
+    preload: 'coast-1440.avif',
     priority: '0.8',
     breadcrumb: 'Kontakt',
   },

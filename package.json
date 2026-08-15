@@ -14,9 +14,10 @@
     "qa": "node scripts/check-site.mjs",
     "qa:shots": "node scripts/shoot-sections.mjs",
     "pages": "node scripts/make-pages.mjs",
-    "qa:perf": "node scripts/measure-perf.mjs",
     "qa:form": "node scripts/check-form.mjs",
-    "qa:rubriker": "node scripts/check-headings.mjs"
+    "qa:rubriker": "node scripts/check-headings.mjs",
+    "qa:fps": "node scripts/measure-frames.mjs",
+    "qa:rorelse": "node scripts/check-motion.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",

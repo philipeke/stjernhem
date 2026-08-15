@@ -95,8 +95,16 @@ export function Footer() {
               OakDev
             </span>
           </a>
-          <a
-            href="#top"
+          <button
+            type="button"
+            onClick={() =>
+              window.scrollTo({
+                top: 0,
+                behavior: matchMedia('(prefers-reduced-motion: reduce)').matches
+                  ? 'auto'
+                  : 'smooth',
+              })
+            }
             className="group inline-flex items-center gap-2.5 py-1.5 font-brand text-[0.62rem] tracking-[0.14em] text-silver-500 uppercase transition-colors duration-300 hover:text-white"
           >
             Till toppen
@@ -109,7 +117,7 @@ export function Footer() {
                 strokeLinejoin="round"
               />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </footer>

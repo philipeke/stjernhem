@@ -12,21 +12,21 @@ export type ImageAsset = {
 export const IMAGES = {
   'hero-forest': {
     name: 'hero-forest',
-    widths: [960, 1440, 1920, 2560],
+    widths: [960, 1440, 1920],
     ar: 1.7777777777777777,
     placeholder: 'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAwCdASoUAAsAPxGCtFIsKaUisAgBgCIJaQAAXBvVGKWru3wtRwAAAP61guJlhj7AIZB24FlaNOyV+fZAQAAA',
     credit: "Jachan DeVol",
   },
   'forest-layers': {
     name: 'forest-layers',
-    widths: [960, 1600, 2200],
+    widths: [960, 1440, 1800],
     ar: 1.7777777777777777,
     placeholder: 'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAABwAwCdASoUAAsAPxF0tFEsJqUisAgBgCIJZwCdACHWrcxyE0AA/lnHW51vhwd8YUGaDZ2IzhFnVtAL+AA=',
     credit: "Sergey Pesterev",
   },
   'lake-dawn': {
     name: 'lake-dawn',
-    widths: [960, 1600, 2200],
+    widths: [960, 1440, 1800],
     ar: 1.7777777777777777,
     placeholder: 'data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAwCdASoUAAsAPxFyslCsJqSisAgBgCIJYgCdACHaSO2ndMYKAAD+ZSSV8B1ZOQd8Bt5Ok4wkfWNdLTh3MjFEThCdjtjpoAA=',
     credit: "Marek Piwnicki",
@@ -96,7 +96,7 @@ export const IMAGES = {
   },
   'coast': {
     name: 'coast',
-    widths: [960, 1600, 2200],
+    widths: [960, 1440, 1800],
     ar: 1.7777777777777777,
     placeholder: 'data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoUAAsAPxF0slCsJqSisAgBgCIJQAALezaNNmcqAAD+1GPqG7o/fTfs2AlolzXB76ZwRhu0D/HUytGIAAA=',
     credit: "Mikael Kristenson",

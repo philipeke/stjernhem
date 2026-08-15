@@ -19,6 +19,12 @@ export const SITE = {
   base: 'Uddevalla',
   coverage: 'Fyrbodal och Dalsland — och på förfrågan även andra områden',
   underConstruction: true,
+  /**
+   * Tröghetsscroll à la Lenis. Avstängd: den flyttar scrollen från
+   * kompositorn till huvudtråden, vilket gjorde att enstaka bildrutor tog
+   * över 100 ms i stället för 60. Sätt till true för att få tillbaka den.
+   */
+  smoothScroll: false,
 } as const
 
 /** Sidorna på webbplatsen. `href` används rakt av i menyn och i sitemapen. */

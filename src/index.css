@@ -145,9 +145,13 @@
   html {
     -webkit-text-size-adjust: 100%;
     scrollbar-gutter: stable;
+    /* Webbläsarens egen mjuka scroll till ankare. Till skillnad från en
+       JavaScript-driven tröghetsscroll körs den utanför huvudtråden. */
+    scroll-behavior: smooth;
   }
 
-  /* Lenis sköter scrollen; native smooth skulle slåss med den. */
+  /* Om tröghetsscrollen slås på igen (SITE.smoothScroll) får den inte
+     slåss med webbläsarens egen. */
   html.lenis,
   html.lenis body {
     height: auto;
@@ -218,6 +222,39 @@
 }
 
 @layer components {
+  /* ---- Intoningar ----
+     Sköts av CSS i stället för av animationsbiblioteket. Enbart opacity och
+     transform animeras, vilket kompositorn klarar utan att blanda in
+     huvudtråden — det är skillnaden mellan hackig och jämn scroll på en lång
+     sida med hundratals element. `src/lib/reveal.ts` sätter attributet. */
+  [data-reveal],
+  [data-reveal-child] {
+    opacity: 0;
+    transform: translate3d(var(--rv-x, 0), var(--rv-y, 24px), 0);
+    transition:
+      opacity var(--rv-duration, 550ms) var(--ease-out-expo) var(--rv-delay, 0ms),
+      transform var(--rv-duration, 550ms) var(--ease-out-expo) var(--rv-delay, 0ms);
+  }
+
+  [data-reveal='in'],
+  [data-reveal-group='in'] [data-reveal-child] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Löpande animationer utanför vy behöver inte ritas. */
+  [data-paused],
+  [data-paused] * {
+    animation-play-state: paused !important;
+  }
+
+  /* Utan JavaScript ska allt synas. */
+  .no-js [data-reveal],
+  .no-js [data-reveal-child] {
+    opacity: 1;
+    transform: none;
+  }
+
   /* Sidans horisontella ram — samma rytm överallt. */
   .shell {
     width: 100%;
@@ -342,5 +379,12 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Inget innehåll får bli osynligt bara för att övergången är avstängd. */
+  [data-reveal],
+  [data-reveal-child] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

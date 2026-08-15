@@ -22,6 +22,9 @@ export function setScrollLocked(locked: boolean) {
 export function useLenis(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return
+    // Mäthook: scripts/measure-frames.mjs stänger av mjuk scroll för att
+    // kunna jämföra bildrutetider med och utan den.
+    if (typeof window !== 'undefined' && (window as { __utanLenis?: boolean }).__utanLenis) return
 
     const lenis = new Lenis({
       // Lerp i stället för duration: sidan följer hjulet direkt och glider

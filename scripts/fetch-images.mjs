@@ -25,11 +25,11 @@ const FORCE = process.argv.includes('--force')
 /** @type {{name:string, id:string, credit:string, widths?:number[], ar?:number}[]} */
 const IMAGES = [
   // Hero — dimmig granskog, nordisk, kylig. Ligger under en mörk gradient.
-  { name: 'hero-forest', id: 'photo-1517782520350-a197eca44965', credit: 'Jachan DeVol', widths: [960, 1440, 1920, 2560], ar: 16 / 9 },
+  { name: 'hero-forest', id: 'photo-1517782520350-a197eca44965', credit: 'Jachan DeVol', widths: [960, 1440, 1920], ar: 16 / 9 },
   // Dimmiga skogslager — parallax-avdelare.
-  { name: 'forest-layers', id: 'photo-1663951489655-763bac01f770', credit: 'Sergey Pesterev', widths: [960, 1600, 2200], ar: 16 / 9 },
+  { name: 'forest-layers', id: 'photo-1663951489655-763bac01f770', credit: 'Sergey Pesterev', widths: [960, 1440, 1800], ar: 16 / 9 },
   // Sol genom dimma över vatten — "en hållbar väg framåt".
-  { name: 'lake-dawn', id: 'photo-1636555269095-c7d28d705e58', credit: 'Marek Piwnicki', widths: [960, 1600, 2200], ar: 16 / 9 },
+  { name: 'lake-dawn', id: 'photo-1636555269095-c7d28d705e58', credit: 'Marek Piwnicki', widths: [960, 1440, 1800], ar: 16 / 9 },
   // Människa vid fönster — sektionen om individen.
   { name: 'reflection', id: 'photo-1559433804-f883aa33026a', credit: 'Anthony Tran', widths: [640, 960, 1400], ar: 4 / 5 },
   // Arbetsstationer.
@@ -44,7 +44,7 @@ const IMAGES = [
   // Rapporten.
   { name: 'report', id: 'photo-1722929309984-c6b3e55dd6e5', credit: 'Kelly Sikkema', widths: [640, 960, 1400], ar: 4 / 3 },
   // Bohuslän — upptagningsområdet.
-  { name: 'coast', id: 'photo-1586716938030-3ae3b95a606b', credit: 'Mikael Kristenson', widths: [960, 1600, 2200], ar: 16 / 9 },
+  { name: 'coast', id: 'photo-1586716938030-3ae3b95a606b', credit: 'Mikael Kristenson', widths: [960, 1440, 1800], ar: 16 / 9 },
 ]
 
 const QUALITY = { avif: 52, webp: 74, jpg: 80 }
